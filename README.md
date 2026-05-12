@@ -79,4 +79,6 @@ Built as a learning project and template for modern web authentication UIs.
 
 ---
 
-**Made with ❤️ by [GAURAV-InnovativeCodeZone](https://github.com/GAURAV-InnovativeCodeZone)**
+**Made with ❤️ by [GAURAV SINGH PANWAR](https://github.com/gauravpanwar08)**
+
+<h4>Happy Coding! 💻😊🚀</h4>
