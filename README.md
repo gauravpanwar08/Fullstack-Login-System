@@ -75,19 +75,19 @@ Swagger UI will be available for testing all endpoints.
 ## 📸 Project Screenshots
 
 ### Login Page
-![Login Page](images/login.png)
+![Login Page](screenshots/login_page.png)
 
 ### Signup Page
-![Signup Page](images/signup.png)
+![Signup Page](screenshots/signup_page.png)
 
 ### Dashboard
-![Dashboard](images/dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
 ### Swagger API Documentation
-![Swagger UI](images/swagger.png)
+![Swagger UI](screenshots/swagger_API.png)
 
 ### Database Schema
-![Database Schema](images/database.png)
+![Database Schema](screenshots/database_table.png)
 
 ## 👨‍💻 Author
 
