@@ -5,8 +5,8 @@ class UserBase(BaseModel):
     email: EmailStr
 
 class UserCreate(UserBase):
-    password: str = Field(min_length=8, description="Password must be at least 8 characters")
-    
+    password: str = Field(min_length=8)
+
 class UserLogin(UserBase):
     password: str
 

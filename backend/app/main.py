@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth
+import os
 
 app = FastAPI(
     title="Production Auth API",
@@ -8,16 +9,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configuration for frontend integration
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific frontend domains
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include Routers
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 
 @app.get("/health")
