@@ -1,79 +1,103 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Login/Signup Page</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth System - Login & Signup</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <div class="wrapper">
-      <div class="title-text">
-        <div class="title login">Login Form</div>
-        <div class="title signup">Signup Form</div>
-      </div>
-      <div class="form-container">
-        <div class="slide-controls">
-          <input type="radio" name="slide" id="login" checked>
-          <input type="radio" name="slide" id="signup">
-          <label for="login" class="slide login">Login</label>
-          <label for="signup" class="slide signup">Sign Up</label>
-          <div class="slider-tab"></div>
+    <div class="wrapper" id="app">
+      <div id="auth-container">
+        <div class="title-text">
+          <div class="title login">Login Form</div>
+          <div class="title signup">Signup Form</div>
         </div>
-        <div class="form-inner">
-          <form action="#" class="login">
-            <div class="field">
-              <input type="text" placeholder="Username or Email" required>
-            </div>
-            <div class="field">
-              <input type="password" placeholder="Password" required>
-            </div>
-            <div class="pass-link"><a href="#">Forgot password?</a></div>
-            <div class="field btn">
-              <div class="btn-layer"></div>
-              <input type="submit" value="Login">
-            </div>
-            <div class="signup-link">Not a member? <a href="">Sign Up</a></div>
-          </form>
-          <form action="#" class="signup">
-            <div class="field">
-              <input type="text" placeholder="Email Address" required>
-            </div>
-            <div class="field">
-              <input type="password" placeholder="Create Password" required>
-            </div>
-            <div class="field">
-              <input type="password" placeholder="Confirm password" required>
-            </div>
-            <div class="field btn">
-              <div class="btn-layer"></div>
-              <input type="submit" value="Sign Up">
-            </div>
-            <div class="signup-link">Already have an account? <a href="">Login</a></div>
-          </form>
+        <div class="form-container">
+          <div class="slide-controls">
+            <input type="radio" name="slide" id="login" checked />
+            <input type="radio" name="slide" id="signup" />
+            <label for="login" class="slide login">Login</label>
+            <label for="signup" class="slide signup">Sign Up</label>
+            <div class="slider-tab"></div>
+          </div>
+          <div class="form-inner">
+            <form id="login-form" class="login">
+              <div class="field">
+                <input
+                  type="email"
+                  id="login-email"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <div class="field">
+                <input
+                  type="password"
+                  id="login-password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="pass-link"><a href="#">Forgot password?</a></div>
+              <div class="field btn">
+                <div class="btn-layer"></div>
+                <input type="submit" value="Login" />
+              </div>
+              <div class="signup-link">
+                Not a member? <a href="#">Sign Up</a>
+              </div>
+              <div id="login-error" class="error-message"></div>
+            </form>
+            <form id="signup-form" class="signup">
+              <div class="field">
+                <input
+                  type="email"
+                  id="signup-email"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <div class="field">
+                <input
+                  type="password"
+                  id="signup-password"
+                  placeholder="Create Password"
+                  required
+                  minlength="8"
+                />
+              </div>
+              <div class="field">
+                <input
+                  type="password"
+                  id="signup-confirm"
+                  placeholder="Confirm Password"
+                  required
+                />
+              </div>
+              <div class="field btn">
+                <div class="btn-layer"></div>
+                <input type="submit" value="Sign Up" />
+              </div>
+              <div class="signup-link">
+                Already have an account? <a href="#">Login</a>
+              </div>
+              <div id="signup-error" class="error-message"></div>
+              <div id="signup-success" class="success-message"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="dashboard" style="display: none">
+        <div class="dashboard-card">
+          <h2>Welcome, <span id="user-email"></span>!</h2>
+          <p>Member since: <span id="user-created"></span></p>
+          <button id="logout-btn" class="logout-button">Logout</button>
         </div>
       </div>
     </div>
 
-    <script>
-      const loginText = document.querySelector(".title-text .login");
-      const loginForm = document.querySelector("form.login");
-      const loginBtn = document.querySelector("label.login");
-      const signupBtn = document.querySelector("label.signup");
-      const signupLink = document.querySelector("form .signup-link a");
-      signupBtn.onclick = (()=>{
-        loginForm.style.marginLeft = "-50%";
-        loginText.style.marginLeft = "-50%";
-      });
-      loginBtn.onclick = (()=>{
-        loginForm.style.marginLeft = "0%";
-        loginText.style.marginLeft = "0%";
-      });
-      signupLink.onclick = (()=>{
-        signupBtn.click();
-        return false;
-      });
-    </script>
-
+    <script src="script.js"></script>
   </body>
 </html>
