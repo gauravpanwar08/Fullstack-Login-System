@@ -1,7 +1,17 @@
 const API_BASE = "http://localhost:8000/auth";
 let currentAccessToken = localStorage.getItem("access_token");
 let currentRefreshToken = localStorage.getItem("refresh_token");
+const loginEmailError = document.getElementById("login-email-error");
 
+const loginPasswordError = document.getElementById("login-password-error");
+
+const signupEmailError = document.getElementById("signup-email-error");
+
+const signupPasswordError = document.getElementById("signup-password-error");
+
+const signupConfirmPasswordError = document.getElementById(
+  "signup-confirm-password-error",
+);
 // Helper to refresh access token
 async function refreshAccessToken() {
   if (!currentRefreshToken) return false;
@@ -61,10 +71,35 @@ function setLoading(form, isLoading) {
   }
 }
 
+function showToast(message, isError = false) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.className = "toast";
+
+  if (isError) {
+    toast.classList.add("error");
+  }
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
 function clearMessages() {
   if (loginErrorDiv) loginErrorDiv.innerText = "";
   if (signupErrorDiv) signupErrorDiv.innerText = "";
   if (signupSuccessDiv) signupSuccessDiv.innerText = "";
+
+  if (loginEmailError) loginEmailError.innerText = "";
+  if (loginPasswordError) loginPasswordError.innerText = "";
+
+  if (signupEmailError) signupEmailError.innerText = "";
+  if (signupPasswordError) signupPasswordError.innerText = "";
+  if (signupConfirmPasswordError) signupConfirmPasswordError.innerText = "";
 }
 
 async function showDashboard() {
@@ -119,7 +154,8 @@ loginForm.addEventListener("submit", async (e) => {
     });
     const data = await response.json();
     if (!response.ok) {
-      loginErrorDiv.innerText = data.detail || "Login failed.";
+      loginPasswordError.innerText = data.detail || "Login failed.";
+
       setLoading(loginForm, false);
       return;
     }
@@ -127,9 +163,13 @@ loginForm.addEventListener("submit", async (e) => {
     localStorage.setItem("refresh_token", data.refresh_token);
     currentAccessToken = data.access_token;
     currentRefreshToken = data.refresh_token;
+    showToast("✅ Login Successful");
+
     await showDashboard();
   } catch (err) {
     loginErrorDiv.innerText = "Network error. Is the backend running?";
+
+    showToast("❌ Network error. Backend unavailable.", true);
   } finally {
     setLoading(loginForm, false);
   }
@@ -146,11 +186,11 @@ signupForm.addEventListener("submit", async (e) => {
     return;
   }
   if (password !== confirm) {
-    signupErrorDiv.innerText = "Passwords do not match.";
+    signupConfirmPasswordError.innerText = "Passwords do not match.";
     return;
   }
   if (password.length < 8) {
-    signupErrorDiv.innerText = "Password must be at least 8 characters.";
+    signupPasswordError.innerText = "Password must be at least 8 characters.";
     return;
   }
   setLoading(signupForm, true);
@@ -162,16 +202,19 @@ signupForm.addEventListener("submit", async (e) => {
     });
     const data = await response.json();
     if (!response.ok) {
-      signupErrorDiv.innerText = data.detail || "Signup failed.";
+      signupEmailError.innerText = data.detail || "Signup failed.";
+
       setLoading(signupForm, false);
       return;
     }
-    signupSuccessDiv.innerText = "Account created! Please login.";
+    showToast("✅ Account Created Successfully! Please login.");
     signupForm.reset();
-    document.getElementById("login").click();
+    loginBtn.click();
     setTimeout(() => (signupSuccessDiv.innerText = ""), 3000);
   } catch (err) {
     signupErrorDiv.innerText = "Network error. Is the backend running?";
+
+    showToast("❌ Network error. Backend unavailable.", true);
   } finally {
     setLoading(signupForm, false);
   }
@@ -182,8 +225,9 @@ const loginText = document.querySelector(".title-text .login");
 const loginFormSlide = document.querySelector("form.login");
 const loginBtn = document.querySelector("label.login");
 const signupBtn = document.querySelector("label.signup");
-const signupLink = document.querySelector("form .signup-link a");
-const loginLink = document.querySelector("form.login .signup-link a");
+
+const signupLink = document.getElementById("go-signup");
+const loginLink = document.getElementById("go-login");
 
 signupBtn.onclick = () => {
   loginFormSlide.style.marginLeft = "-50%";
@@ -195,18 +239,21 @@ loginBtn.onclick = () => {
   loginText.style.marginLeft = "0%";
   clearMessages();
 };
-if (signupLink)
-  signupLink.onclick = () => {
-    signupBtn.click();
-    return false;
-  };
-if (loginLink)
-  loginLink.onclick = () => {
-    loginBtn.click();
-    return false;
-  };
+signupLink?.addEventListener("click", (e) => {
+  e.preventDefault();
+  signupBtn.click();
+});
 
-document.getElementById("logout-btn")?.addEventListener("click", logout);
+loginLink?.addEventListener("click", (e) => {
+  e.preventDefault();
+  loginBtn.click();
+});
+
+document.getElementById("logout-btn")?.addEventListener("click", () => {
+  logout();
+
+  showToast("✅ Logged Out Successfully");
+});
 
 if (currentAccessToken) {
   showDashboard().catch(() => logout());

@@ -1,103 +1,86 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auth System - Login & Signup</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="wrapper" id="app">
-      <div id="auth-container">
-        <div class="title-text">
-          <div class="title login">Login Form</div>
-          <div class="title signup">Signup Form</div>
-        </div>
-        <div class="form-container">
-          <div class="slide-controls">
-            <input type="radio" name="slide" id="login" checked />
-            <input type="radio" name="slide" id="signup" />
-            <label for="login" class="slide login">Login</label>
-            <label for="signup" class="slide signup">Sign Up</label>
-            <div class="slider-tab"></div>
-          </div>
-          <div class="form-inner">
-            <form id="login-form" class="login">
-              <div class="field">
-                <input
-                  type="email"
-                  id="login-email"
-                  placeholder="Email Address"
-                  required
-                />
-              </div>
-              <div class="field">
-                <input
-                  type="password"
-                  id="login-password"
-                  placeholder="Password"
-                  required
-                />
-              </div>
-              <div class="pass-link"><a href="#">Forgot password?</a></div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="Login" />
-              </div>
-              <div class="signup-link">
-                Not a member? <a href="#">Sign Up</a>
-              </div>
-              <div id="login-error" class="error-message"></div>
-            </form>
-            <form id="signup-form" class="signup">
-              <div class="field">
-                <input
-                  type="email"
-                  id="signup-email"
-                  placeholder="Email Address"
-                  required
-                />
-              </div>
-              <div class="field">
-                <input
-                  type="password"
-                  id="signup-password"
-                  placeholder="Create Password"
-                  required
-                  minlength="8"
-                />
-              </div>
-              <div class="field">
-                <input
-                  type="password"
-                  id="signup-confirm"
-                  placeholder="Confirm Password"
-                  required
-                />
-              </div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="Sign Up" />
-              </div>
-              <div class="signup-link">
-                Already have an account? <a href="#">Login</a>
-              </div>
-              <div id="signup-error" class="error-message"></div>
-              <div id="signup-success" class="success-message"></div>
-            </form>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth System - Login & Signup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="toast" class="toast"></div>
+
+  <div class="wrapper" id="app">
+    <div id="auth-container">
+      <div class="title-text">
+        <div class="title login">Login Form</div>
+        <div class="title signup">Signup Form</div>
       </div>
-      <div id="dashboard" style="display: none">
-        <div class="dashboard-card">
-          <h2>Welcome, <span id="user-email"></span>!</h2>
-          <p>Member since: <span id="user-created"></span></p>
-          <button id="logout-btn" class="logout-button">Logout</button>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked />
+          <input type="radio" name="slide" id="signup" />
+          <label for="login" class="slide login">Login</label>
+          <label for="signup" class="slide signup">Sign Up</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form id="login-form" class="login">
+            <div class="field">
+              <input type="email" id="login-email" placeholder="Email Address" required />
+              <div id="login-email-error" class="field-error"></div>
+            </div>
+            <div class="field">
+              <input type="password" id="login-password" placeholder="Password" required />
+            </div>
+            <div id="login-password-error" class="field-error"></div>
+            <div class="pass-link"><a href="#">Forgot password?</a></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Login" />
+            </div>
+            <div class="signup-link">
+              Not a member? <a href="#" id="go-signup">Sign Up</a>
+            </div>
+            <div id="login-error" class="error-message"></div>
+          </form>
+          <form id="signup-form" class="signup">
+            <div class="field">
+              <input type="email" id="signup-email" placeholder="Email Address" required />
+            </div>
+            <div id="signup-email-error" class="field-error"></div>
+            <div class="field">
+              <input type="password" id="signup-password" placeholder="Create Password" required minlength="8" />
+            </div>
+            <div id="signup-password-error" class="field-error"></div>
+            <div class="field">
+              <input type="password" id="signup-confirm" placeholder="Confirm Password" required />
+            </div>
+            <div id="signup-confirm-password-error" class="field-error"></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Sign Up" />
+            </div>
+            <div class="signup-link">
+              Already have an account? <a href="#" id="go-login">Login</a>
+            </div>
+            <div id="signup-error" class="error-message"></div>
+            <div id="signup-success" class="success-message"></div>
+          </form>
         </div>
       </div>
     </div>
+    <div id="dashboard" style="display: none">
+      <div class="dashboard-card">
+        <h2>Welcome, <span id="user-email"></span>!</h2>
+        <p>Member since: <span id="user-created"></span></p>
+        <button id="logout-btn" class="logout-button">Logout</button>
+      </div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
+
 </html>
